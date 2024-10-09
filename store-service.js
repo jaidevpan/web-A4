@@ -1,29 +1,58 @@
 const fs = require('fs');
 
-// Helper function to read JSON files
-const readJSONFile = (path) => {
+let items = [];
+let categories = [];
+
+function initialize() {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
+    fs.readFile('./data/items.json', 'utf8', (err, data) => {
       if (err) {
-        reject(err);
-      } else {
-        resolve(JSON.parse(data));
+        reject("Unable to read file");
+        return;
       }
+      items = JSON.parse(data);
+
+      fs.readFile('./data/categories.json', 'utf8', (err, data) => {
+        if (err) {
+          reject("Unable to read file");
+          return;
+        }
+        categories = JSON.parse(data);
+        resolve();
+      });
     });
   });
-};
+}
 
-// Fetch all items
-const getAllItems = () => {
-  return readJSONFile('./data/items.json');
-};
+function getAllItems() {
+  return new Promise((resolve, reject) => {
+    if (items.length === 0) {
+      reject("no items found");
+    } else {
+      resolve(items);
+    }
+  });
+}
 
-// Fetch all categories
-const getAllCategories = () => {
-  return readJSONFile('./data/categories.json');
-};
+function getPublishedItems() {
+  return new Promise((resolve, reject) => {
+    const publishedItems = items.filter(item => item.published);
+    if (publishedItems.length === 0) {
+      reject("no published items found");
+    } else {
+      resolve(publishedItems);
+    }
+  });
+}
 
-module.exports = {
-  getAllItems,
-  getAllCategories
-};
+function getCategories() {
+  return new Promise((resolve, reject) => {
+    if (categories.length === 0) {
+      reject("No categories found");
+    } else {
+      resolve(categories);
+    }
+  });
+}
+
+module.exports = { initialize, getAllItems, getPublishedItems, getCategories };
