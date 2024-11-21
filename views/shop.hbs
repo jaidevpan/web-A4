@@ -1,0 +1,64 @@
+<div class="row">
+  <section class="main col-md-9">
+    {{#if data.post}}
+    <item>
+      <div class="row">
+        <div class="col-4">
+          <h2>{{data.post.title}}</h2>
+          <img
+            src="{{data.post.featureImage}}"
+            alt="{{data.post.title}}"
+            style="width:100%"
+          />
+        </div>
+
+        <div class="col-8"><br />
+          <br />
+          <div class="row">
+            <div class="col-12">
+              {{#safeHTML data.post.body}}{{/safeHTML}}<br /><br />
+              <strong>Price:</strong>
+              $ {{data.post.price}}<br />
+              <strong>Category:</strong>
+              {{data.post.category}}<br />
+              <strong>Last Updated:</strong>
+              {{data.post.postDate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </item>
+    {{else}}
+    <div class="col-md-12 text-center">
+      <h2>{{data.message}}</h2>
+      <p>Please try another Post / Category</p>
+    </div>
+    {{/if}}
+  </section>
+    <!-- Sidebar -->
+    <aside class="col-md-3">
+        <!-- Items List -->
+        <h4>Items</h4>
+{{#if data.posts}}
+<ul>
+  {{#each data.posts}}
+  <li><a href="/shop?category={{../viewingCategory}}&id={{id}}">{{title}}</a></li>
+
+  {{/each}}
+</ul>
+{{else}}
+<p>No items available.</p>
+{{/if}}
+        <!-- Categories List -->
+        <h4>Categories</h4>
+        {{#if data.categories}}
+            <ul>
+                {{#each data.categories}}
+                    <li><a href="/shop?category={{id}}">{{category}}</a></li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <p>No categories available.</p>
+        {{/if}}
+    </aside>
+</div>
