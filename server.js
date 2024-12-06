@@ -1,12 +1,12 @@
 /*********************************************************************************
-WEB322 – Assignment 04
+WEB322 – Assignment 05
 I declare that this assignment is my own work in accordance with Seneca Academic Policy.
 No part of this assignment has been copied manually or electronically from any other source 
 (including 3rd party web sites) or distributed to other students.
 
 Name: Jaidev Panchal
 Student ID: 115682239
-Date: 17/11/2024
+Date: 5/12/2024
 Replit Web App URL: 
 GitHub Repository URL: 
 ********************************************************************************/
@@ -19,6 +19,7 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
+
 
 // Serving static files
 app.use(express.static('public'));
@@ -52,11 +53,20 @@ app.engine('.hbs', exphbs.engine({
     },
     safeHTML: function(context) {
       return context ? new Handlebars.SafeString(context) : "";
+    },
+    
+    formatDate: function (dateObj) {
+      let year = dateObj.getFullYear();
+      let month = (dateObj.getMonth() + 1).toString();
+      let day = dateObj.getDate().toString();
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
   }
 }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
+
+
 
 const PORT = process.env.PORT || 8080;
 cloudinary.config({
@@ -65,6 +75,37 @@ cloudinary.config({
   api_secret: 'qQzQRSAgze6McUkBuug7jnR3u3c',
   secure: true
   })
+
+  app.get('/categories/add', (req, res) => {
+    res.render('addCategory'); // Render the "addCategory" view (to be created)
+  });
+  app.post('/categories/add', (req, res) => {
+    storeService.addCategory(req.body)
+      .then(() => {
+        res.redirect('/categories'); // Redirect to the categories view
+      })
+      .catch((err) => {
+        res.status(500).send("Unable to Add Category"); // Handle errors
+      });
+  });
+  app.get('/categories/delete/:id', (req, res) => {
+    storeService.deleteCategoryById(req.params.id)
+      .then(() => {
+        res.redirect('/categories'); // Redirect to the categories view
+      })
+      .catch((err) => {
+        res.status(500).send("Unable to Remove Category / Category not found"); // Handle errors
+      });
+  });
+  app.get('/items/delete/:id', (req, res) => {
+    storeService.deletePostById(req.params.id)
+      .then(() => {
+        res.redirect('/items'); // Redirect to the items view
+      })
+      .catch((err) => {
+        res.status(500).send("Unable to Remove Item / Item not found"); // Handle errors
+      });
+  });
 
 // Multer configuration (no disk storage)
 const upload = multer();
@@ -80,38 +121,66 @@ app.get('/about', (req, res) => {
   // Route to fetch all items for /items
   app.get('/items', async (req, res) => {
     let viewData = {};
+  
     try {
-      const items = await storeService.getPublishedItems();
-      viewData.items = items;
+      // Get all items
+      const items = await storeService.getAllItems();
+      if (items.length > 0) {
+        viewData.items = items;
+      } else {
+        viewData.message = "no results";
+      }
     } catch (err) {
-      viewData.message = "No items available.";
+      viewData.message = "no results"; // Handle promise rejection
     }
+  
     try {
+      // Get all categories
       const categories = await storeService.getCategories();
-      viewData.categories = categories;
+      if (categories.length > 0) {
+        viewData.categories = categories;
+      } else {
+        viewData.categoriesMessage = "no categories available";
+      }
     } catch (err) {
-      viewData.categoriesMessage = "No categories available.";
+      viewData.categoriesMessage = "no categories available"; // Handle promise rejection
     }
+  
+    // Render the "Items" view with the data or messages
     res.render('items', { data: viewData });
   });
   
   // Route to fetch all categories for /categories
   app.get('/categories', async (req, res) => {
+    let viewData = {};
+  
     try {
+      // Get all categories
       const categories = await storeService.getCategories();
-      res.render('categories', { categories });
-    } catch (error) {
-      console.error("Error retrieving categories:", error);
-      res.render('categories', { message: "No categories available" });
+      if (categories.length > 0) {
+        viewData.categories = categories;
+      } else {
+        viewData.message = "no results";
+      }
+    } catch (err) {
+      viewData.message = "no results"; // Handle promise rejection
     }
+  
+    // Render the "categories" view with the data or messages
+    res.render('categories', { data: viewData });
   });
   
 
   // to add new route to add itmes
   app.get('/items/add', (req, res) => {
-    res.render('addItem');
-});
-
+    storeService.getCategories()
+      .then((categories) => {
+        res.render('addItem', { categories }); // Pass the categories to the view
+      })
+      .catch(() => {
+        res.render('addItem', { categories: [] }); // Render with an empty array if no categories
+      });
+  });
 
   // POST /items/add route to handle item creation
 app.post('/items/add', upload.single('featureImage'), (req, res) => {

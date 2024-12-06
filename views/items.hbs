@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <h2>Items</h2>
+    <a href="/items/add" class="btn btn-success pull-right">Add Post</a>
     <hr />
     {{#if data.items}}
     <div class="table-responsive">
@@ -13,6 +14,7 @@
             <th>Price</th>
             <th>Category</th>
             <th>Published</th>
+            <th></th> <!-- Empty header for the "Remove" column -->
           </tr>
         </thead>
         <tbody>
@@ -20,10 +22,17 @@
           <tr>
             <td>{{this.id}}</td>
             <td>{{this.title}}</td>
-            <td>{{this.postDate}}</td>
+          <td>{{#formatDate this.postDate}}{{/formatDate}}</td>
             <td>${{this.price}}</td>
-            <td><a href="/items?category={{this.category}}">{{this.category}}</a></td>
+            <td>
+              <a href="/items?category={{this.category}}">{{this.category}}</a>
+            </td>
             <td>{{#if this.published}}true{{else}}false{{/if}}</td>
+            <td>
+              <a href="/items/delete/{{this.id}}" class="btn btn-danger">
+                Remove
+              </a>
+            </td>
           </tr>
           {{/each}}
         </tbody>
