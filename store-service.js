@@ -9,13 +9,13 @@ const { gte } = Sequelize.Op; // Destructure the 'greater than or equal to' oper
 
 // Replace these values with your ElephantSQL database credentials
 const sequelize = new Sequelize('SenecaDB', 'SenecaDB_owner', '0bcNUZ3dGyeu', {
-    host: 'ep-restless-glitter-a5ar5nt9.us-east-2.aws.neon.tech', // e.g., your ElephantSQL hostname
-    dialect: 'postgres',
-    port: 5432, // Default PostgreSQL port
-    dialectOptions: {
-        ssl: { rejectUnauthorized: false } // Enables SSL for secure connection
-    },
-    query: { raw: true } // Ensures raw SQL queries are returned
+  host: 'ep-restless-glitter-a5ar5nt9.us-east-2.aws.neon.tech', // e.g., your ElephantSQL hostname
+  dialect: 'postgres',
+  port: 5432, // Default PostgreSQL port
+  dialectOptions: {
+      ssl: { rejectUnauthorized: false } // Enables SSL for secure connection
+  },
+  query: { raw: true } // Ensures raw SQL queries are returned
 });
 
 // Define the Item model

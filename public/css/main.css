@@ -1,75 +1,75 @@
 body {
-    font-family: 'Roboto', sans-serif; /* Switched to a cleaner font */
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa; /* Light background color for better contrast */
-    color: #343a40; /* Dark gray text for better readability */
+  font-family: 'Roboto', sans-serif; /* Switched to a cleaner font */
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Light background color for better contrast */
+  color: #343a40; /* Dark gray text for better readability */
 }
 
 nav {
-    margin-bottom: 20px;
-    background-color: #007bff; /* Navy blue background for the navigation bar */
-    padding: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  margin-bottom: 20px;
+  background-color: #007bff; /* Navy blue background for the navigation bar */
+  padding: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    font-weight: bold;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-weight: bold;
 }
 
 nav a:hover {
-    background-color: #17a2b8; /* Darken link background on hover */
-    border-radius: 4px; /* Smooth border around links */
+  background-color: #17a2b8; /* Darken link background on hover */
+  border-radius: 4px; /* Smooth border around links */
 }
 
 h2 {
-    color: #17a2b8; /* Switched to a teal-like color for headers */
-    font-size: 28px;
-    margin-top: 20px;
-    text-align: center; /* Centering the header */
+  color: #17a2b8; /* Switched to a teal-like color for headers */
+  font-size: 28px;
+  margin-top: 20px;
+  text-align: center; /* Centering the header */
 }
 
 p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 20px auto;
-    max-width: 800px; /* Limiting paragraph width for better readability */
-    text-align: justify;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 20px auto;
+  max-width: 800px; /* Limiting paragraph width for better readability */
+  text-align: justify;
 }
 
 button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #218838; /* Darken the button on hover */
+  background-color: #218838; /* Darken the button on hover */
 }
 
 footer {
-    background-color: #343a40;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 14px;
+  background-color: #343a40;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
 }
 
 footer a {
-    color: #ffffff;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
